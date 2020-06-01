@@ -10,6 +10,7 @@ AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
 
 # Checks for programs.
 AC_PROG_CXX
+AM_PROG_AR
 LT_INIT([dlopen])
 
 # Checks for libraries.
@@ -25,8 +26,18 @@ AC_CONFIG_FILES([
     minus/Makefile
     plus/Makefile
     program/Makefile
-    test/Makefile
 ])
+
+AC_ARG_WITH([test], 
+    AS_HELP_STRING([--with-test], [building test code])
+)
+
+AS_IF([test "x$with_test" = "xyes"],
+    AC_CONFIG_FILES([
+        test/Makefile
+    ])
+)
+AM_CONDITIONAL([TEST], [test x$with_test = xyes])
 
 AC_OUTPUT
 
